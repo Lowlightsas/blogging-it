@@ -1,0 +1,186 @@
+
+{%load static%}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="{%static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link rel="stylesheet" href="{%static "css/fontawesome.css" %}">
+<link rel="stylesheet" href="{%static "css/templatemo-stand-blog.css" %}">
+<link rel="stylesheet" href="{%static "css/owl.css" %}">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6114/6114045.png"/>
+
+<body>
+
+  <style>
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%; /* Делает аватар круглым */
+      object-fit: cover; /* Убедитесь, что изображение правильно обрезано */
+      border: 3px solid #fff; /* Добавляет белую рамку */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* Анимация при наведении */
+  }
+  
+  .avatar:hover {
+      transform: scale(1.1); /* Увеличение при наведении */
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+  }
+  
+  </style>
+<header class="">
+    <nav class="navbar navbar-expand-lg ">
+      <div class="container">
+        <a class="navbar-brand" href="{%url "post:home"%}"><h2>My Blog<em>.</em></h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{%url "post:home"%}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "post:about"%}">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "post:base"%}">Blog Entries</a>
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "post:contact"%}">Contact Us</a>
+            </li>
+            {%if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "account:profile"%}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "account:logout"%}">Logout</a>
+            </li>
+            {%else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url "account:login"%}">Login</a>
+            </li>
+            {%endif%}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="heading-page header-text">
+    
+  </div>
+  
+<section class="background-radial-gradient overflow-hidden">
+    
+    <div class="container py-5">
+        <div class="row text-center"  >
+            <div class="col-lg-4">
+                <div class="card mb-4 bg-dark">
+                    <div class="card-body text-center">
+                        {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" 
+     alt="avatar" 
+     class="avatar">
+
+                        {% else %}
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        {% endif %}
+                        <h5 class="my-3 text-white">{{ user.get_full_name }}</h5>
+                        <p class="text-muted mb-1">Client</p>
+                        <p class="text-muted mb-4">{{ profile.city }}</p>
+                        <a href="{% url 'account:edit' %}" class="btn btn-outline-light mb-2">Редактировать Профиль</a>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                                <i class="fas fa-key me-2 text-secondary"></i>
+                                <a href="{% url 'account:password_change' %}" class="text-decoration-none text-white">Изменить Пароль</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-4 bg-dark">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="text-muted mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-light mb-0">{{ user.get_full_name }}</p>
+                            </div>
+                        </div>
+                        <hr class="bg-secondary">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="text-muted mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-light mb-0">{{ user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="social-icons">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Behance</a></li>
+            <li><a href="#">Linkedin</a></li>
+            <li><a href="#">Dribbble</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-12">
+          <div class="copyright-text">
+            <p>Copyright 2025 Blog Lowlight.
+                  
+               | Design: <a rel="nofollow" href="https://t.me/lowlightdeveloper" target="_parent">Lowlight</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+<!-- Bootstrap core JavaScript -->
+<script src="{%static "vendor/jquery/jquery.min.js" %}"></script>
+<script src="{%static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Additional Scripts -->
+<script src="{%static "js/custom.js" %}"></script>
+<script src="{%static "js/owl.js" %}"></script>
+<script src="{%static "js/slick.js" %}"></script>
+<script src="{%static "js/isotope.js" %}"></script>
+<script src="{%static "js/accordions.js" %}"></script>
+
+
+<script language = "text/Javascript"> 
+  cleared[0] = cleared[1] = cleared[2] = 0; 
+  function clearField(t){                   
+  if(! cleared[t.id]){                     
+      cleared[t.id] = 1;  
+      t.value='';      
+      t.style.color='#fff';
+      }
+  }
+</script>
+
+</body>
+
+{% endblock %}

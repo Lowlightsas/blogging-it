@@ -1,0 +1,272 @@
+{%load static %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+
+    <title>Create a Blog Post</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6114/6114045.png"/>
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-stand-blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<style>
+  .blog-posts {
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post-form, .attachment-formset {
+    margin-bottom: 2rem;
+}
+
+.attachment-item {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Section Styling */
+.blog-posts {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* Heading Styles */
+.section-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.form-section-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+/* Form Styling */
+.post-form, .attachment-formset {
+    margin-bottom: 20px;
+}
+
+.post-form p, .attachment-formset .attachment-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Button Styling */
+.submit-btn-container {
+    text-align: center;
+}
+
+
+.publish-button .left, .publish-button .right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    width: 15px;
+ 
+    transition: all 0.3s ease;
+}
+
+.publish-button .left {
+    left: 0;
+}
+
+.publish-button .right {
+    right: 0;
+}
+
+.publish-button:hover {
+    background-color:rgb(138, 67, 2);
+}
+
+.publish-button:hover .left, .publish-button:hover .right {
+    width: 30px;
+}
+
+.publish-button:focus {
+    outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+}
+
+
+</style>
+<body>
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <a class="navbar-brand" href="{%url "post:base"%}"><h2>My Blog<em>.</em></h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "post:home"%}">Home
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url "post:about"%}">About Us</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url "post:contact"%}">Contact Us</a>
+                  </li>
+                {%if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:profile"%}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:logout"%}">Logout</a>
+                </li>
+                {%else%}
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:login"%}">Login</a>
+                </li>
+                {%endif%}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+    <!-- Page Content -->
+    <div class="heading-page header-text">
+        <section class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-content">
+                            <h4>Create Your Post</h4>
+                            <h2>Share Your Thoughts with the World</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="blog-posts">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8 offset-lg-2">
+                  <!-- Add a heading for clarity -->
+          
+  
+                  <!-- Start the form -->
+                  <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+  
+                      <!-- Post details section -->
+                      <h2 class="form-section-heading">Post Details</h2>
+                      <div class="post-form">
+                          {{ post_form.as_p }}
+                      </div>
+  
+                      <!-- File upload section -->
+                      <h2 class="form-section-heading">Upload Images</h2>
+                      <div class="attachment-formset">
+                          {{ attachment_formset.management_form }}
+                          {% for form in attachment_formset %}
+                              <div class="attachment-item">
+                                  {{ form.as_p }}
+                              </div>
+                          {% endfor %}
+                      </div>
+  
+                      <!-- Submit button -->
+                      <div class="submit-btn-container">
+                          <button type="submit" class="publish-button">
+                              <div class="left"></div>
+                              Publish
+                              <div class="right"></div>
+                          </button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </section>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="social-icons">
+            <li><a href="https://t.me/lowlightdeveloper">Telegram</a></li>
+            <li><a href="#">Linkedin</a></li>
+           
+          </ul>
+        </div>
+        <div class="col-lg-12">
+          <div class="copyright-text">
+            <p>Copyright 2025 Blog Lowlight.
+                  
+               | Design: <a rel="nofollow" href="https://t.me/lowlightdeveloper" target="_parent">Lowlight</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+    <!-- Scripts -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+{% endblock %}
+
+

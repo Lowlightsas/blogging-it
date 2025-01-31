@@ -1,0 +1,5 @@
+/my_env
+/blog/db.sqlite3
+/blog/mysite_data.json
+/blog/mysite_data_utf8.json
+/blog/blog/settings.py

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Design by foolishdeveloper.com -->
+    <title>Login</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+{% block content %}
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    
+    <h3>Login Here</h3>
+        {% if form.errors %}
+        <p>
+            Your username and password didn't match.
+            Please try again.
+          </p>
+        {% else %}
+        <p>Please, use the following form to log-in:</p>
+        {% endif %}
+        <div class="login-form">
+          <form action="{% url 'account:login' %}" method="post">
+            <h3>Login Here</h3>
+              {{ form.as_p }}
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ next }}" />
+              <p><input type="submit" value="Log-in"></p>
+            
+              <div class="social">
+                <div class="go"><i class="fab fa-google"></i> Google</div>
+               
+              </div>
+              
+           
+              <p>
+                Don't have an account? 
+                <a href="{% url 'account:register' %}" class="register-btn">Register here</a>
+              </p>
+            </form>
+        </div>
+</body>
+</html>
+{% endblock %}

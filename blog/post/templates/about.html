@@ -1,0 +1,223 @@
+{%load static %}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6114/6114045.png"/>
+
+    <title>My Blog - About Page</title>
+
+    <link href="{%static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{%static "css/fontawesome.css" %}">
+    <link rel="stylesheet" href="{%static "css/templatemo-stand-blog.css" %}">
+    <link rel="stylesheet" href="{%static "css/owl.css" %}">
+
+
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <a class="navbar-brand" href="{%url "post:home"%}"><h2>My Blog<em>.</em></h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "post:home"%}">Home
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li> 
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "post:about"%}">About Us</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{%url "post:base"%}">Blog Entries</a>
+                </li>
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "post:contact"%}">Contact Us</a>
+                </li>
+                {%if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:profile"%}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:logout"%}">Logout</a>
+                </li>
+                {%else%}
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url "account:login"%}">Login</a>
+                </li>
+                {%endif%}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="heading-page header-text">
+        <section class="page-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="text-content">
+                  <h4>about us</h4>
+                  <h2>more about us!</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <section class="call-to-action">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-content">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <span>My Blog</span>
+                    <h4>"Share your story! Tell us about your experiences, inspiration, or ideas – your story can become part of our blog and inspire others!"</h4>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="main-button">
+                      <a href="{%url "post:create_post"%}" target="_parent">Write!</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+
+    
+    <!-- Banner Ends Here -->
+
+    <section class="about-us">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <img src="assets/images/about-us.jpg" alt="">
+              <p>Добро пожаловать на наш блог для программистов! Это место, где вы можете поделиться своим опытом, обсудить карьерные достижения и высказывать мнение о новейших тенденциях в сфере IT. Мы уверены, что каждый из вас может внести свой вклад в развитие сообщества. Возможно, у вас есть ценные советы для начинающих программистов, или вы хотите рассказать о сложных ситуациях, которые пришлось преодолеть в своей профессиональной жизни. Здесь, в нашем блоге, каждый опыт имеет значение, и мы приглашаем вас присоединиться к обсуждению.</p>
+      
+              <p>Карьерный рост в IT-сфере — это не только навыки программирования. Это умение решать реальные проблемы, работать в команде и всегда быть в поиске новых знаний. В Казахстане IT-отрасль переживает бурный рост, и возможности для развития открываются буквально на каждом шагу. Базовые курсы по программированию, веб-разработке, мобильным приложениям и другим направлениям стали доступными для каждого желающего. IT-компании с каждым годом увеличивают свои масштабы, создавая новые рабочие места и улучшая инфраструктуру для молодых специалистов.</p>
+      
+              <p>Казахстан активно внедряет передовые технологии, и этот процесс касается не только крупных корпораций, но и стартапов, где зачастую работаются самые инновационные идеи. Студенты и молодые специалисты становятся частью этого захватывающего процесса, создавая стартапы, разрабатывая мобильные и веб-приложения, участвующие в улучшении цифровой среды. Важно понимать, что быть частью этой революции — это не просто работа. Это целое приключение, в котором можно не только научиться новому, но и сделать мир лучше через технологии.</p>
+      
+              <p>Наш блог предлагает вам не только вдохновение, но и практическое руководство по тому, как справляться с трудностями на пути развития. Мы пишем о реальных примерах из жизни программистов, о карьерных неудачах, которые превратились в успех, а также делимся ценными рекомендациями по саморазвитию. Читайте, вдохновляйтесь и делитесь собственными историями с нами! В Казахстане появляется всё больше программ, направленных на подготовку специалистов в области IT. Это открывает невероятные возможности для тех, кто готов учиться и развиваться в этой сфере.</p>
+      
+              <p>Будь то углубленное изучение искусственного интеллекта, кибербезопасности или разработка мобильных приложений, всё это становится доступным для специалистов всех уровней. Развиваясь вместе с индустрией, вы можете изменить не только свою карьеру, но и мир вокруг себя. Этот блог создан для тех, кто верит в силу технологий и хочет расти в этой сфере, не боясь новых вызовов и изменений. Присоединяйтесь к нам, делитесь своим опытом, обсуждайте идеи и развивайтесь вместе с нами!</p>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-lg-6">
+              <h4>Как начать карьеру в IT?</h4>
+              <p>Если вы хотите стать частью быстрорастущей IT-отрасли, первым шагом будет изучение основ программирования. Начните с простых языков, таких как Python или JavaScript, и постепенно переходите к более сложным концепциям. Программирование — это не только технический процесс, но и искусство решать задачи с помощью технологий. Разработка сайтов, мобильных приложений или веб-сервисов — все это может стать вашей карьерой. Важно не бояться ошибок и неустанно совершенствоваться. Также помните, что важнейшая составляющая успеха — это опыт. Чем больше проектов вы завершите, тем больше навыков приобретете.</p>
+            </div>
+            <div class="col-lg-6">
+              <h4>Как развиваться в Казахстане?</h4>
+              <p>В Казахстане IT-отрасль активно развивается, и возможности для карьерного роста не ограничены. В стране появляются стартапы, инвесторы поддерживают новые идеи, а государственные программы активно содействуют созданию инновационных проектов. Если вы хотите стать частью этой динамичной сферы, вам стоит воспользоваться всеми возможностями, которые предлагает рынок. Участвуйте в курсах, проходите стажировки, принимайте участие в хакатонах и создавайте свои проекты. Казахстан предоставляет отличные условия для стартапов и карьерного роста в области технологий. Не упустите шанс стать частью будущего!</p>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <h4>Идеи для стартапов в Казахстане</h4>
+              <p>В Казахстане существует множество возможностей для создания успешных стартапов в области IT. Технологии блокчейн, искусственный интеллект, мобильные приложения и другие области сейчас в центре внимания инвесторов. Подумайте, как ваши идеи могут помочь решить текущие проблемы в IT-сфере или улучшить жизнь пользователей. Стартапы, ориентированные на локальные и международные рынки, имеют потенциал для роста и успеха. Важно не бояться начинать и верить в свою идею!</p>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <h4>Какие технологии будут актуальны в будущем?</h4>
+              <p>Искусственный интеллект, машинное обучение, облачные вычисления, а также технологии блокчейн — это только некоторые из тех направлений, которые определяют будущее IT-отрасли. Казахстан активно внедряет эти технологии в различные сферы, от финансов до медицины. Если вы хотите быть на передовой, изучайте эти направления и развивайте навыки, которые будут востребованы в будущем.</p>
+            </div>
+            <div class="col-lg-4">
+              <h4>Роль профессиональных сообществ</h4>
+              <p>Профессиональные сообщества играют важную роль в развитии карьеры программистов. Это место, где можно обмениваться опытом, находить единомышленников и получать поддержку от более опытных специалистов. Присоединяйтесь к онлайн- и оффлайн-сообществам, участвуйте в митапах и конференциях. Это поможет не только развивать знания, но и строить полезные связи.</p>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-lg-12">
+              <ul class="social-icons">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="social-icons">
+              <li><a href="https://t.me/lowlightdeveloper">Telegram</a></li>
+              <li><a href="#">Linkedin</a></li>
+             
+            </ul>
+          </div>
+          <div class="col-lg-12">
+            <div class="copyright-text">
+              <p>Copyright 2025 Blog Lowlight.
+                    
+                 | Design: <a rel="nofollow" href="https://t.me/lowlightdeveloper" target="_parent">Lowlight</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{%static "vendor/jquery/jquery.min.js" %}"></script>
+    <script src="{%static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{%static "js/custom.js" %}"></script>
+    <script src="{%static "js/owl.js" %}"></script>
+    <script src="{%static "js/slick.js" %}"></script>
+    <script src="{%static "js/isotope.js" %}"></script>
+    <script src="{%static "js/accordions.js" %}"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; 
+      function clearField(t){                   
+      if(! cleared[t.id]){                      
+          cleared[t.id] = 1;  
+          t.value='';         
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>
+{%endblock%}
