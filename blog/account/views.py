@@ -36,3 +36,4 @@ def profile(request):
     profile = request.user.profile
     return render(request,'account/profile.html',{'user':request.user,'profile':profile})
 
+

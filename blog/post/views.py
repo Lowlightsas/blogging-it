@@ -107,29 +107,3 @@ def about(request):
 def contact(request):
     return render(request,'contact.html')
 
-from django.db.models import Q
-from django.contrib.postgres.search import TrigramSimilarity
-from django.shortcuts import render
-from .forms import SearchForm
-from .models import Post
-
-def post_search(request):
-    form = SearchForm(request.GET or None)
-    query = None
-    results = []
-    
-    # Проверяем, есть ли параметр 'query' в запросе
-    if 'query' in request.GET:
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            # Выполняем поиск по триграммам
-            results = Post.published.annotate(
-                similarity=TrigramSimilarity('title', query),
-            ).filter(similarity__gt=0.1).order_by('-similarity')
-    
-    # Передаем результаты в шаблон
-    return render(request, 'base.html', {
-        'form': form,
-        'query': query,
-        'results': results,
-    })

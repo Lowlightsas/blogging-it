@@ -196,36 +196,7 @@
               <div class="sidebar">
                 <div class="row">
                   <div class="col-lg-12">
-                    <div class="sidebar-item search">
-                     <!-- Форма поиска -->
-                      <form id="search_form" name="gs" method="GET" action="{% url 'post:search' %}">
-                        <input
-                          type="text"
-                          name="query"
-                          class="searchText"
-                          placeholder="Введите для поиска..."
-                          value="{{ query }}"
-                          autocomplete="on"
-                        />
-                      </form>
-
-                      <!-- Результаты поиска -->
-                      {% if results %}
-                        <h2>Результаты поиска для "{{ query }}"</h2>
-                        <ul>
-                          {% for post in results %}
-                            <li>
-                              <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            </li>
-                          {% endfor %}
-                        </ul>
-                      {% elif query %}
-                        <p>Ничего не найдено по запросу "{{ query }}".</p>
-                      {% endif %}
-
-                    </div>
-                  </div>
-            
+                
                 
                 
                
