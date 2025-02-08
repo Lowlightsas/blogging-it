@@ -49,7 +49,7 @@
     background-color: #333;
     padding: 20px;
     border-radius: 5px;
-    color: rgba(255, 145, 0, 0.68);;
+   
 }
 
 .btn-close {
@@ -67,8 +67,6 @@
 }
 
 </style>
-
-
 <header class="">
     <nav class="navbar navbar-expand-lg ">
       <div class="container">
@@ -122,8 +120,8 @@
             <div class="col-lg-4">
                 <div class="card mb-4 bg-dark">
                     <div class="card-body text-center">
-                        {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" 
+                        {% if user.profile.photo %}
+                        <img src="{{ user.profile.photo.url }}" 
      alt="avatar" 
      class="avatar">
 
@@ -133,62 +131,72 @@
                         <h5 class="my-3 text-white">{{ user.get_full_name }}</h5>
                         <p class="text-muted mb-1">Client</p>
                         <p class="text-muted mb-4">{{ profile.city }}</p>
-                        <a href="{% url 'account:edit' %}" class="btn btn-outline-light mb-2">Редактировать Профиль</a>
+                        {% if user != request.user %}
+                        {% if user not in request.user.following.all %}
+                            <form method="post" action="{% url 'account:subscribe' user.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-light mb-2">
+                                    <i class="fas fa-user-plus"></i> Follow
+                                </button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{% url 'account:unsubscribe' user.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger mb-2">
+                                    <i class="fas fa-user-times"></i> Unfollow
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    
+                    
+                      
                     </div>
                 </div>
 
                 <div class="card mb-4">
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush rounded-3">
-                            
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
-                                <i class="fas fa-key me-2 text-secondary"></i>
-                                <a href="{% url 'account:password_change' %}" class="text-decoration-none text-white">Изменить Пароль</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body p-0">
-                      <ul class="list-group list-group-flush rounded-3">
-                          <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
-                              <i class="fas fa-user-friends me-2 text-secondary"></i>
-                              <a href="#" class="text-decoration-none text-white" id="showFollowersModal">Followers</a>
-                          </li>
-                      </ul>
-                  </div>
-                  
-                  <!-- Модальное окно для подписчиков -->
-                  <div id="followersModal" class="modal" style="display:none;">
-                      <div class="modal-content bg-dark text-white">
-                          <div class="modal-header">
-                              <h5 class="modal-title">Followers</h5>
-                              <button type="button" class="btn-close" id="closeModal">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                              <!-- Здесь будет список подписчиков -->
-                              <ul class="list-group">
-                                {% for follower in user.followers.all %}
-                                <li class="list-group-item bg-dark text-white d-flex align-items-center">
-                                  <!-- Профильная фотография -->
-                                  <img src="{{ follower.profile.photo.url }}" alt="{{ follower.username }}" class="profile-img me-2">
-                                  <!-- Пробел между изображением и именем -->
-                                  <span>&nbsp;</span>
-                                  <span>&nbsp;</span>
-                                  <span>&nbsp;</span>
-                                  <!-- Имя пользователя -->
-                                  <a href="{% url 'account:user_detail' follower.username %}" class="text-decoration-none text-white">
-                                      {{ follower.username }}
-                                  </a>
-                              </li>
-                              {% empty %}
-                              <li class="list-group-item bg-dark text-white">No followers yet.</li>
-                              {% endfor %}
-
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-
                
+                  <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+                            <i class="fas fa-user-friends me-2 text-secondary"></i>
+                            <a href="#" class="text-decoration-none text-white" id="showFollowersModal">Followers</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Модальное окно для подписчиков -->
+                <div id="followersModal" class="modal" style="display:none;">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Followers</h5>
+                            <button type="button" class="btn-close" id="closeModal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Здесь будет список подписчиков -->
+                            <ul class="list-group">
+                              {% for follower in user.followers.all %}
+                              <li class="list-group-item bg-dark text-white d-flex align-items-center">
+                                <!-- Профильная фотография -->
+                                <img src="{{ follower.profile.photo.url }}" alt="{{ follower.username }}" class="profile-img me-2">
+                                <!-- Пробел между изображением и именем -->
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <!-- Имя пользователя -->
+                                <a href="{% url 'account:user_detail' follower.username %}" class="text-decoration-none text-white">
+                                    {{ follower.username }}
+                                </a>
+                            </li>
+                            
+{% empty %}
+  <li class="list-group-item bg-dark text-white">No followers yet.</li>
+{% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                   <div class="card-body p-0">
                     <ul class="list-group list-group-flush rounded-3">
                         
@@ -201,6 +209,7 @@
 
                     </ul>
                 </div>
+               
                 </div>
             </div>
 
@@ -245,50 +254,51 @@
                         
                     </div>
                 </div>
-                <div class="col-lg-12">
-                  <div class="card mb-4 bg-dark border-0 rounded-4 shadow">
-                      <div class="card-header bg-secondary text-light rounded-top">
-                          <h5 class="mb-0">Посты</h5>
-                      </div>
-                      <div class="card-body">
-                          <h6 class="text-info">{{ user_posts|length }} постов</h6>
-                      
-                          {% if user_posts %}
-                              <div class="scroll-container" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #4e5d6c #2c3e50;">
-                                  {% for post in user_posts %}
-                                      <div class="row mb-3 align-items-center">
-                                          <div class="col-sm-3 text-center">
-                                              {% if post.attachments.all %}
-                                                  <img src="{{ post.attachments.first.photo.url }}" 
-                                                       alt="Post Image" 
-                                                       class="img-fluid rounded-3 shadow-sm" 
-                                                       style="width: 100px; height: 100px; object-fit: cover;">
-                                              {% endif %}
-                                          </div>
-                                          <div class="col-sm-9">
-                                              <div class="p-3 bg-secondary text-light rounded-3">
-                                                  <strong>{{ post.title }}</strong><br>
-                                                  <a href="{% url 'post:post_edit_form' post.id %}" class="text-decoration-none text-info">
-                                                      Edit Post
-                                                  </a>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  {% endfor %}
-                              </div>
-                          {% else %}
-                              <div class="alert alert-warning text-center">
-                                  No posts yet.
-                              </div>
-                          {% endif %}
-                      </div>
-                  </div>
-                  
-                  
-                  
-                  
-          </div>
-            
+                   <div class="col-lg-12">
+                    <div class="card mb-4 bg-dark border-0 rounded-4 shadow">
+                        <div class="card-header bg-secondary text-light rounded-top">
+                            <h5 class="mb-0">Посты</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-info">{{ user_posts|length }} постов</h6>
+                        
+                            {% if user_posts %}
+                                <div class="scroll-container" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #4e5d6c #2c3e50;">
+                                    {% for post in user_posts %}
+                                        <div class="row mb-3 align-items-center">
+                                            <div class="col-sm-3 text-center">
+                                                {% if post.attachments.all %}
+                                                    <img src="{{ post.attachments.first.photo.url }}" 
+                                                         alt="Post Image" 
+                                                         class="img-fluid rounded-3 shadow-sm" 
+                                                         style="width: 100px; height: 100px; object-fit: cover;">
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="p-3 bg-secondary text-light rounded-3">
+                                                    <strong>{{ post.title }}</strong><br>
+                                                    <a href="{% url 'post:detail' post.id %}" class="text-decoration-none text-info">
+                                                        Read More
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-warning text-center">
+                                    No posts yet.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+            </div>
+            </div>
+        
         </div>
     </div>
 </section>
@@ -337,6 +347,7 @@
       }
   }
 </script>
+
 <script>
   document.getElementById('showFollowersModal').addEventListener('click', function (e) {
       e.preventDefault();  // Останавливает переход по ссылке
@@ -366,7 +377,6 @@
       }
   });
 </script>
-
 </body>
 
 {% endblock %}

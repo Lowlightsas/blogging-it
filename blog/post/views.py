@@ -2,11 +2,15 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import Post,Category,Comment,PostAttachment
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from .forms import PostForm,CommentForm,SearchForm
+from .forms import PostForm,CommentForm,ContactForm,PostAttachmentEditForm,PostEditForm
 from django.views.decorators.http import require_POST
 from django.forms import modelformset_factory
-from django.contrib.postgres.search import SearchVector
-from django.contrib.postgres.search import TrigramSimilarity
+import redis
+from django.conf import settings
+from django.core.mail import EmailMessage
+
+
+r = redis.Redis(host=settings.REDIS_HOST,port=settings.REDIS_PORT,db=settings.REDIS_DB)
 
 
 def home(request):
@@ -55,9 +59,15 @@ def base(request, category_slug=None):
     }
 
     return render(request, 'base.html', context)
+
+
 @login_required
 def post_detail(request,id):
     form = CommentForm(request.POST)
+    user_key = f"user:{request.user.id}" if request.user.is_authenticated else f"anon:{request.session.session_key}"
+    post_views_key = f'post:{id}:views'
+    r.sadd(post_views_key,user_key)
+    views = r.scard(post_views_key)
     post = get_object_or_404(Post,id=id,status=Post.Status.PUBLISHED)
     comments = post.comments.filter(active=True)
     if form.is_valid():
@@ -66,7 +76,7 @@ def post_detail(request,id):
         comment.author = request.user
         comment.save()
         return redirect('post:detail',id=post.id)
-    return render(request,'detail.html',{'post':post,'form':form,'comments':comments})
+    return render(request,'detail.html',{'post':post,'form':form,'comments':comments,'views':views})
 
 
 
@@ -104,6 +114,50 @@ def create_post(request):
 def about(request):
     return render(request,'about.html')
 
-def contact(request):
-    return render(request,'contact.html')
 
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            full_message = (
+                f"Сообщение от: {form.cleaned_data['name']} <{form.cleaned_data['email']}>\n\n"
+                f"{form.cleaned_data['message']}"
+            )
+
+            email = EmailMessage(
+                subject=form.cleaned_data['subject'],
+                body=full_message,
+                from_email=settings.EMAIL_HOST_USER,  # адрес вашего аккаунта
+                to=[settings.EMAIL_HOST_USER],          # письмо придёт к вам
+                reply_to=[form.cleaned_data['email']],  # при ответе письмо пойдёт на email пользователя
+            )
+            email.send(fail_silently=False)
+            return redirect('post:contact')
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})
+
+@login_required
+def post_edit_form(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if post.author == request.user and request.method == 'POST':
+        post_form = PostEditForm(request.POST, instance=post)
+       
+        attachment = post.attachments.first()  
+        attachment_form = PostAttachmentEditForm(request.POST, request.FILES, instance=attachment)
+
+        if post_form.is_valid() and attachment_form.is_valid():
+            post_form.save()
+            attachment_form.save() 
+            return redirect('post:detail', id=post.id)
+    else:
+        post_form = PostEditForm(instance=post)
+       
+        attachment = post.attachments.first() 
+        attachment_form = PostAttachmentEditForm(instance=attachment)
+
+    return render(request, 'edit_postform.html', {'post_form': post_form, 'attachment_form': attachment_form, 'post': post})

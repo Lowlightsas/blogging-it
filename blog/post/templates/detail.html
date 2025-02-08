@@ -11,6 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>Blog - Post Details</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6114/6114045.png"/>
@@ -150,10 +151,19 @@
                         <span>{{ post.category }}</span>
                         <a href="post-details.html"><h4>{{ post.title }}</h4></a>
                         <ul class="post-info">
-                          <li><a href="#">{{ post.author }}</a></li>
-                          <li><a href="#">{{ post.created }}</a></li>
+                          <li><a href="{%url "account:user_detail" post.author%}">{{ post.author }}</a></li>
+                          <li><a href="{%url "account:user_detail" post.author%}">{{ post.created }}</a></li>
                           <li><a href="#">{{ comments.count }} Comments</a></li>
+                          <li><p class="views-counter" style="font-size: 15px; opacity: 0.7;">
+                            <i class="fa-solid fa-eye me-1"></i> {{ views }}
+                          </p></li>
                         </ul>
+                   
+                        
+                        
+                        
+                        
+                        
                         <p>{{ post.body }}</p>
                         <div class="post-options">
                           <div class="row">
@@ -168,10 +178,21 @@
                             <div class="col-6">
                               <ul class="post-share">
                                 <li><i class="fa fa-share-alt"></i></li>
-                                <li><a href="#">Facebook</a>,</li>
-                                <li><a href="#"> Twitter</a></li>
+                                <li><a href="https://t.me/share/url?url={{ request.build_absolute_uri|urlencode }}">Telegram</a>,</li>
+                                <li>
+                                  <a href="https://twitter.com/intent/tweet?text={{ news.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank">
+                                    Twitter
+                                  </a>,
+                                </li>
+                                <li>
+                                  <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank">
+                                    Facebook
+                                  </a>
+                                </li>
+                                
                               </ul>
                             </div>
+                            
                           </div>
                         </div>
                       </div>
@@ -192,8 +213,12 @@
                                 <img src="{{ comment.author.profile.photo.url }}" alt="Profile picture">
                               </div>
                               <div class="right-content">
-                                <h4>{{ comment.author.username }}<span>{{ comment.created }}</span></h4>
+                                {%if comment.author.username%}
+                                <h4><a href="{%url "account:user_detail" comment.author.username%}">{{ comment.author.username }}</a><span>{{ comment.created }}</span></h4>
                                 <p>{{ comment.body }}</p>
+                                {%else%}
+                               {%endif%}
+                                <span>{% if comment.is_reply %}Replied to {{ comment.reply_to }}{% endif %}</span>
                               </div>
                             </li>
                           {% endfor %}

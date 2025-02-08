@@ -11,6 +11,50 @@
     <!--Stylesheet-->
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
+<style>
+  .social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.social-btn i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.google {
+    background:rgb(245, 90, 0);
+}
+
+.google:hover {
+    background: #c23321;
+}
+
+.github {
+    background: #333;
+}
+
+.github:hover {
+    background: #24292e;
+}
+
+</style>
 {% block content %}
 <body>
     <div class="background">
@@ -35,11 +79,15 @@
               <input type="hidden" name="next" value="{{ next }}" />
               <p><input type="submit" value="Log-in"></p>
             
-              <div class="social">
-                <div class="go"><i class="fab fa-google"></i> Google</div>
-               
-              </div>
-              
+              <div class="social-login">
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google">
+                    <i class="fab fa-google"></i>Google
+                </a>
+                <a href="{% url 'social:begin' 'github' %}" class="social-btn github">
+                    <i class="fab fa-github"></i>GitHub
+                </a>
+            </div>
+            
            
               <p>
                 Don't have an account? 

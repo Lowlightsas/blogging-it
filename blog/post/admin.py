@@ -2,12 +2,11 @@ from django.contrib import admin
 from .models import Category,Post,PostAttachment,Comment
 
 
-class PostAttachmentInline(admin.TabularInline):  # Можно использовать StackedInline для другого вида
+class PostAttachmentInline(admin.TabularInline):  
     model = PostAttachment
-    extra = 1  # Количество пустых дополнительных полей для новых вложений
-    fields = ['photo', 'caption']  # Поля для редактирования
-    max_num = 10  # Максимальное количество вложений, если нужно ограничение
-
+    extra = 1
+    fields = ['photo', 'caption']  
+    max_num = 10  
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -24,9 +23,9 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'publish'
     ordering = ['status', 'publish']
-    inlines = [PostAttachmentInline]  # Включаем inline редактирование вложений
+    inlines = [PostAttachmentInline] 
 
-
+    
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['author','post','created','active']

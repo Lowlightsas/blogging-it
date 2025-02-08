@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from taggit.managers import TaggableManager
 
 
+
 class Category(models.Model):
     
     category_name = models.CharField(max_length=255)
@@ -105,3 +106,13 @@ class Comment(models.Model):
         ]
     def __str__(self):
         return f'Comment by {self.author} on {self.post}'
+    
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200, blank=True, null=True)
+    message = models.TextField()
+
+    def __str__(self):
+        return f"Message from {self.name}"

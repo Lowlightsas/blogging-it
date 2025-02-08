@@ -137,7 +137,7 @@
                       <span>{{post.category}}</span>
                       <a href="{%url "post:detail" post.id%}"><h4>{{post.title}}</h4></a>
                       <ul class="post-info">
-                        <li><a href="{%url "post:detail" post.id%}">{{post.author}}</a></li>
+                        <li><a href="{%url "account:user_detail" post.author%}">{{post.author}}</a></li>
                         <li><a href="{%url "post:detail" post.id%}">{{post.created}}</a></li>
                         <li><a href="{%url "post:detail" post.id%}">{{post.comments.count}} Comments</a></li>
                       </ul>
@@ -153,6 +153,20 @@
                             </ul>
                           </div>
                         </div>
+                        <ul class="post-share">
+                          <li><i class="fa fa-share-alt"></i></li>
+                          <li><a href="https://t.me/share/url?url={{ request.build_absolute_uri|urlencode }}">Telegram</a>,</li>
+                          <li>
+                            <a href="https://twitter.com/intent/tweet?text={{ news.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank">
+                              Twitter
+                            </a>,
+                          </li>
+                          <li>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank">
+                              Facebook
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
